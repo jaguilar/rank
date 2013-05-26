@@ -7,7 +7,8 @@ import operator
 
 init_mu = 25.0
 init_sigma = init_mu / 3.0
-beta = init_sigma / 2.0
+beta = init_sigma / 2.0  # TODO(jaguilar): increase since skills are so close?
+dynamics = (init_sigma / 100) * (init_sigma / 100)
 
 
 def phi(x):
@@ -154,7 +155,7 @@ def matchup_omega_delta(beta, team, otherteam, ranks, num_teams):
     gamma = 1.0 / num_teams
 
     return (sigmasq_to_ciq * (s - piq),
-            (gamma * sigmasq_to_ciq) / (ciq * piq * (1.0 - piq)))
+            ((gamma * sigmasq_to_ciq) / ciq) * piq * (1.0 - piq))
 
 
 def update_players(team, omega, delta):
@@ -162,7 +163,7 @@ def update_players(team, omega, delta):
         sigmasq = p.sigma * p.sigma
         return Player(p.name,
                       p.mu + (omega * (sigmasq / team.sigmasq)),
-                      p.sigma * sqrt(max(0.0001, 1.0 - (sigmasq / team.sigmasq) * delta)))
+                      p.sigma * sqrt(max(0.0001, 1.0 - (sigmasq / team.sigmasq) * delta)) + dynamics)
     f = functools.partial(update_player, team=team, omega=omega, delta=delta)
     return map(f, team.players)
 
