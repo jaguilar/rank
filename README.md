@@ -1,6 +1,22 @@
 rank
 ====
 
+This project creates skill ratings for players and teams of players. It is still in a fairly 
+rudimentary state.
+
+The output below is the rating of the various teams playing in the spring split of the LCS
+for the first four weeks of play. The model of skill is a gaussian, where the mu represents
+the expected performance and the sigma represents the deviation in performance. In practical
+terms, this means that the mu represents "how good" the algorithm thinks the team is, and the
+sigma represents how uncertain the algorithm is about its guess (and/or how consistent the team
+is -- these two are more or less the same value).
+
+The format of the following output is:
+
+    TEAM_NAME(SIGMA~MU)
+    
+After four weeks, the algorithm believes Team Curse and Team Dignitas are way better than the other
+teams.
 
 ```
 clg(25.0~8.33) col(25.0~8.33) crs(25.0~8.33) dig(25.0~8.33) ggu(25.0~8.33) mrn(25.0~8.33) tsm(25.0~8.33) vul(25.0~8.33)
