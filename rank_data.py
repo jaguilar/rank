@@ -71,7 +71,7 @@ def match(ts, winner, loser):
     if win_prob < 0.15:
         print('Crazy result: {0} beats {1} at odds of {2:0.2}'.format(repr(winner), repr(loser), win_prob))
     elif win_prob < 0.30:
-        print('Upset: {0} beats {1} at odds of {2:02}'.format(repr(winner), repr(loser), win_prob))
+        print('Upset: {0} beats {1} at odds of {2:0.2}'.format(repr(winner), repr(loser), win_prob))
     ranks = {winner: 1, loser: 2}
     (winner_after, loser_after) = rank.update_bt_full(rank.beta, [winner, loser], ranks)
     ts.update_team(winner_after)
