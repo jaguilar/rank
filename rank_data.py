@@ -226,6 +226,7 @@ def do():
     print(ts.stats())
     for w in weeks:
         w(ts)
+        print('')
         print(ts.stats())
     
 
