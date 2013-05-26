@@ -225,8 +225,8 @@ def do():
     weeks = [week1, week2, week3, week4, week5, week6, week7, week8, week9, week10, playoffs]
     print(ts.stats())
     for w in weeks:
-        w(ts)
         print('')
+        w(ts)
         print(ts.stats())
     
 
