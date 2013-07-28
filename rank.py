@@ -7,7 +7,7 @@ import operator
 
 init_mu = 25.0
 init_sigma = init_mu / 3.0
-beta = init_sigma / 2.0  # TODO(jaguilar): increase since skills are so close?
+beta = init_sigma / 2.0  
 dynamics = (init_sigma / 100) * (init_sigma / 100)
 
 
@@ -31,62 +31,11 @@ def norm_cdf(x):
     return (res if x < 0.0 else 2.0 - res) / 2.0
 
 
-def V(x, t):
-    xt = x - t
-    denom = norm_cdf(xt)
-    if denom <= 0.0:
-        -xt
-    else:
-        phi(xt) / denom
-
-
-def W(x, t):
-    xt = x - t
-    denom = norm_cdf(xt)
-
-    if denom <= 0.0:
-        if (x < 0.0):
-            return 1.0
-        else:
-            return 0.0
-    else:
-        return V(x, t) * (V(x, t) + xt)
-
-
-def Vt(x, t):
-    xx = abs(x)
-    b = norm_cdf(t - xx) - norm_cdf(-t - xx)
-
-    if (b < 1e-5):
-        if (x < 0.):
-            return -x - t
-        else:
-            return -x + t
-    else:
-        a = phi(-t - xx) - phi(t - xx)
-        if x < 0.0:
-            return -a / b
-        else:
-            return a / b
-
-
-def Wt(x, t):
-    xx = abs(x)
-    b = norm_cdf(t - xx) - norm_cdf(-t - xx)
-
-    if b <= 0.:
-        return 1.
-    else:
-        return ((t - xx) * phi(t - xx) + (t + xx) * phi(-t - xx)) / b + Vt(x, t) * Vt(x, t)
-
-
 def dist_format(mu, sigma):
-    return '{0:0.3}~{1:0.3}'.format(mu, sigma)
+    return 'N({0:0.3}, {1:0.3})'.format(mu, sigma)
 
 
 class Player:
-
-
     def __init__(self, name='', mu=init_mu, sigma=init_sigma):
         self.mu = mu
         self.sigma = sigma
@@ -97,7 +46,6 @@ class Player:
 
 
 class Team:
-
     def __init__(self, name='', players=None):
         self.mu = sum([p.mu for p in players])
         self.sigmasq = sum([p.sigma * p.sigma for p in players])
